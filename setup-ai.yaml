@@ -1,0 +1,27 @@
+--- 
+- name: Setup AI
+  gather_facts: No
+  hosts: all
+
+  tasks:
+    - name: Download and Update Repo
+      become: True
+      apt:
+        name:
+          - vim
+          - git-lfs
+          - python3-pip
+        state: present
+        update_cache: True
+
+    - name: Install Torch
+      pip: 
+        name: torch
+        extra_args: --extra-index-url https://download.pytorch.org/whl/cu116
+
+    - name: Install PIP Packages
+      pip:
+        name: diffusers==0.3.0,transformers,scipy,ftfy
+    
+
+        
